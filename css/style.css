@@ -1,11 +1,59 @@
-body {
-  font-family: sans-serif;
-  text-align: center;
-  margin-top: 50px;
+/* === 基本リセット === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
+/* === レイアウト === */
+body {
+  height: 100vh;                       /* 画面いっぱい */
+  display: flex;
+  justify-content: center;             /* 水平中央 */
+  align-items: center;                 /* 垂直中央 */
+  background: #fafafa;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont,
+               "Helvetica Neue", Arial, sans-serif;
+}
+
+/* === ナビゲーション === */
+nav ul {
+  list-style: none;
+  text-align: center;
+}
+
+nav li {
+  font-size: clamp(1.6rem, 2.5vw, 2.6rem);  /* レスポンシブ */
+  line-height: 1.3;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin-block: 0.6em;                      /* 上下マージン */
+  position: relative;
+}
+
+/* 区切り線 */
+nav li:not(:last-child)::after {
+  content: "";
+  display: block;
+  height: 1px;
+  background: #e2e2e2;
+  margin-top: 0.5em;
+}
+
+/* リンクの見た目 */
+nav a {
+  color: inherit;
+  text-decoration: none;
+  padding: 0.2em 0.5em;
+  transition: color 0.2s ease;
+}
+
+nav a:hover {
+  color: #007aff;                          /* お好みのアクセントカラー */
+}
+
+/* アクティブ状態 */
+.active {
+  font-weight: 700;
+  color: #000;
 }
