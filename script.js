@@ -7,6 +7,8 @@ const colors = [
 ];
 let colorIndex = 0;
 const labelStyles = {};
+// 描画した要素を保持する配列
+const elements = [];
 
 function getColor(label) {
   if (!labelStyles[label]) {
@@ -37,6 +39,48 @@ function drawLine(x1, y1, x2, y2, label) {
   ctx.stroke();
 }
 
+function addPoint(x, y, label) {
+  elements.push({ type: 'point', x, y, label });
+  drawPoint(x, y, label);
+}
+
+function addLine(x1, y1, x2, y2, label) {
+  elements.push({ type: 'line', x1, y1, x2, y2, label });
+  drawLine(x1, y1, x2, y2, label);
+}
+
+function redraw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for (const el of elements) {
+    if (el.type === 'point') {
+      drawPoint(el.x, el.y, el.label);
+    } else if (el.type === 'line') {
+      drawLine(el.x1, el.y1, el.x2, el.y2, el.label);
+    }
+  }
+}
+
+// 編集用関数。index は elements 配列の位置
+function editPoint(index, x, y) {
+  const el = elements[index];
+  if (el && el.type === 'point') {
+    el.x = x;
+    el.y = y;
+    redraw();
+  }
+}
+
+function editLine(index, x1, y1, x2, y2) {
+  const el = elements[index];
+  if (el && el.type === 'line') {
+    el.x1 = x1;
+    el.y1 = y1;
+    el.x2 = x2;
+    el.y2 = y2;
+    redraw();
+  }
+}
+
 function resetState() {
   currentX = canvas.width / 2;
   currentY = canvas.height / 2;
@@ -44,6 +88,7 @@ function resetState() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   colorIndex = 0;
   for (const key in labelStyles) delete labelStyles[key];
+  elements.length = 0;
 }
 
 function runScript(text) {
@@ -85,7 +130,7 @@ function runScript(text) {
         currentX += parseFloat(parts[3]) || 0;
         currentY += parseFloat(parts[4]) || 0;
       }
-      drawPoint(currentX, currentY, label);
+      addPoint(currentX, currentY, label);
       i++;
     } else if (cmd === 'line') {
       const label = parts[1] || '';
@@ -102,7 +147,7 @@ function runScript(text) {
       const rad = (angle * Math.PI) / 180;
       const newX = currentX + length * Math.cos(rad);
       const newY = currentY + length * Math.sin(rad);
-      drawLine(currentX, currentY, newX, newY, label);
+      addLine(currentX, currentY, newX, newY, label);
       currentX = newX;
       currentY = newY;
       i++;
