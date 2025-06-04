@@ -9,6 +9,7 @@ let colorIndex = 0;
 const labelStyles = {};
 // 描画した要素を保持する配列
 const elements = [];
+const controls = document.getElementById('elementControls');
 
 function getColor(label) {
   if (!labelStyles[label]) {
@@ -60,6 +61,64 @@ function redraw() {
   }
 }
 
+function updateControls() {
+  if (!controls) return;
+  controls.innerHTML = '';
+  elements.forEach((el, i) => {
+    const row = document.createElement('div');
+    if (el.type === 'point') {
+      const label = document.createTextNode(`Point ${i} (${el.label}) `);
+      const xInput = document.createElement('input');
+      xInput.type = 'number';
+      xInput.value = el.x;
+      xInput.step = 'any';
+      const yInput = document.createElement('input');
+      yInput.type = 'number';
+      yInput.value = el.y;
+      yInput.step = 'any';
+      const btn = document.createElement('button');
+      btn.textContent = 'Update';
+      btn.addEventListener('click', () => {
+        editPoint(i, parseFloat(xInput.value), parseFloat(yInput.value));
+      });
+      row.appendChild(label);
+      row.appendChild(xInput);
+      row.appendChild(yInput);
+      row.appendChild(btn);
+    } else if (el.type === 'line') {
+      const label = document.createTextNode(`Line ${i} (${el.label}) `);
+      const x1 = document.createElement('input');
+      x1.type = 'number';
+      x1.value = el.x1;
+      x1.step = 'any';
+      const y1 = document.createElement('input');
+      y1.type = 'number';
+      y1.value = el.y1;
+      y1.step = 'any';
+      const x2 = document.createElement('input');
+      x2.type = 'number';
+      x2.value = el.x2;
+      x2.step = 'any';
+      const y2 = document.createElement('input');
+      y2.type = 'number';
+      y2.value = el.y2;
+      y2.step = 'any';
+      const btn = document.createElement('button');
+      btn.textContent = 'Update';
+      btn.addEventListener('click', () => {
+        editLine(i, parseFloat(x1.value), parseFloat(y1.value), parseFloat(x2.value), parseFloat(y2.value));
+      });
+      row.appendChild(label);
+      row.appendChild(x1);
+      row.appendChild(y1);
+      row.appendChild(x2);
+      row.appendChild(y2);
+      row.appendChild(btn);
+    }
+    controls.appendChild(row);
+  });
+}
+
 // 編集用関数。index は elements 配列の位置
 function editPoint(index, x, y) {
   const el = elements[index];
@@ -67,6 +126,7 @@ function editPoint(index, x, y) {
     el.x = x;
     el.y = y;
     redraw();
+    updateControls();
   }
 }
 
@@ -78,6 +138,7 @@ function editLine(index, x1, y1, x2, y2) {
     el.x2 = x2;
     el.y2 = y2;
     redraw();
+    updateControls();
   }
 }
 
@@ -89,6 +150,7 @@ function resetState() {
   colorIndex = 0;
   for (const key in labelStyles) delete labelStyles[key];
   elements.length = 0;
+  if (controls) controls.innerHTML = '';
 }
 
 function runScript(text) {
@@ -155,6 +217,7 @@ function runScript(text) {
       i++;
     }
   }
+  updateControls();
 }
 
 document.getElementById('run').addEventListener('click', () => {
