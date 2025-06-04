@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Stylish SPA – GitHub Pages</title>
+    <title>スタイリッシュなSPA – GitHub Pages</title>
     <!-- Favicon (inline SVG, avoids 404 on GitHub Pages) -->
     <link
       rel="icon"
@@ -28,21 +28,20 @@
       const { useState } = React;
 
       const navItems = [
-        { key: "dashboard", label: "Dashboard" },
-        { key: "orders", label: "Orders" },
-        { key: "products", label: "Products" },
-        { key: "customers", label: "Customers" }
+        { key: "dashboard", label: "ダッシュボード" },
+        { key: "orders", label: "注文" },
+        { key: "products", label: "商品" },
+        { key: "customers", label: "顧客" }
       ];
 
       const Hero = () => (
         <section className="rounded-2xl bg-gradient-to-br from-blue-500 to-blue-400 p-8 shadow-sm text-white flex flex-col sm:flex-row sm:items-center justify-between">
           <div>
-            <h1 className="text-3xl sm:text-4xl font-bold leading-tight">
-              Stylish Single-Page<br className="hidden sm:block" /> Application
+          <h1 className="text-3xl sm:text-4xl font-bold leading-tight">
+              スタイリッシュなシングルページ<br className="hidden sm:block" />アプリケーション
             </h1>
             <p className="mt-4 max-w-md text-blue-100">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore.
+              これはデモ用のシングルページアプリケーションです。
             </p>
           </div>
           <div className="hidden sm:block w-44 h-44">
@@ -67,7 +66,7 @@
           <Hero />
           <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {Array.from({ length: 6 }).map((_, i) => (
-              <Card key={i} title={`Heading ${i + 1}`} text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+              <Card key={i} title={`見出し ${i + 1}`} text="サンプルの説明文が入ります。" />
             ))}
           </div>
         </main>
@@ -84,11 +83,11 @@
           case "dashboard":
             return <Dashboard />;
           case "orders":
-            return <Placeholder label="Orders" />;
+            return <Placeholder label="注文" />;
           case "products":
-            return <Placeholder label="Products" />;
+            return <Placeholder label="商品" />;
           case "customers":
-            return <Placeholder label="Customers" />;
+            return <Placeholder label="顧客" />;
           default:
             return <Dashboard />;
         }
@@ -111,7 +110,7 @@
             {/* Sidebar */}
             <aside className="hidden sm:flex flex-col w-60 bg-white shadow px-4 py-6">
               <div className="flex items-center gap-2 mb-10 font-bold text-xl select-none">
-                <span className="w-8 h-8 rounded-full bg-gray-200" /> Logo
+                <span className="w-8 h-8 rounded-full bg-gray-200" /> ロゴ
               </div>
               <nav className="space-y-2 flex-1">
                 {navItems.map(({ key, label }) => (
@@ -125,7 +124,7 @@
                 ))}
               </nav>
               <button className="mt-auto flex items-center gap-3 px-4 py-2 rounded-lg text-gray-500 hover:bg-gray-100 select-none">
-                Profile
+                プロフィール
               </button>
             </aside>
 
@@ -135,13 +134,13 @@
               <header className="h-16 bg-white shadow-sm flex items-center justify-between px-4 sm:px-8 select-none">
                 <div className="flex items-center gap-6">
                   <button className="sm:hidden p-2 -ml-2 text-gray-700 hover:text-blue-500" onClick={() => alert("Implement mobile menu toggle")}>☰</button>
-                  <a href="#" className="text-sm font-medium hover:text-blue-600">Home</a>
-                  <a href="#about" className="text-sm font-medium hover:text-blue-600">About</a>
-                  <a href="#services" className="text-sm font-medium hover:text-blue-600">Services</a>
+                  <a href="#" className="text-sm font-medium hover:text-blue-600">ホーム</a>
+                  <a href="#about" className="text-sm font-medium hover:text-blue-600">概要</a>
+                  <a href="#services" className="text-sm font-medium hover:text-blue-600">サービス</a>
                 </div>
                 <div className="flex items-center gap-4">
-                  <a href="#signin" className="text-sm font-medium hover:text-blue-600 hidden sm:inline">Sign In</a>
-                  <button className="bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg">Sign in</button>
+                  <a href="#signin" className="text-sm font-medium hover:text-blue-600 hidden sm:inline">サインイン</a>
+                  <button className="bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg">サインイン</button>
                 </div>
               </header>
 
