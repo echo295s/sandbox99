@@ -1,29 +1,19 @@
 # sandbox99
 
-シンプルな作画スクリプトのデモです。
+This is a simple demo for managing drawable elements on a canvas.
+Open `index.html` in a browser and use the exposed API from the
+JavaScript console.
 
-`index.html` をブラウザで開き、テキストエリアに以下のようなスクリプトを入力して `実行` ボタンを押すと、キャンバスに描画されます。
+## API
 
-```
-point start abs 250 250
-repeat 5
-  line edge 80 rel 72
-end
-```
+`elementManager` is a global instance that manages elements.
+Elements have unique ids and optional parent-child relationships.
 
-- `point <label> abs <x> <y>`: 絶対座標に点を配置します。
-- `point <label> rel <dx> <dy>`: 直前の点からの相対座標に点を配置します。
-- `line <label> <length> abs <angle>`: 現在位置から長さと絶対角度で線を引きます。
-- `line <label> <length> rel <angle>`: 現在位置から長さと前回角度からの相対角度で線を引きます。
-- `repeat <n>` ... `end`: ブロックを n 回繰り返します。
+- `addPoint(x, y, parentId)`: add a point at `(x, y)`.
+- `addLine(startPointId, length, angle, parentId)`: add a line that begins at
+  the point specified by `startPointId` and extends with `length` and `angle`.
+- `updatePoint(id, x, y)`: change the coordinates of an existing point.
+- `updateLine(id, startPointId, length, angle)`: update the parameters of a
+  line.
 
-同じラベルの要素は同じ色で描画されます。
-
-## 要素の編集
-
-描画後の点や線は以下のグローバル関数で編集できます。
-
-- `editPoint(index, x, y)`: `index` 番目の点を新しい座標 `(x, y)` に移動します。
-- `editLine(index, x1, y1, x2, y2)`: `index` 番目の線を新しい始点 `(x1, y1)`、終点 `(x2, y2)` に変更します。
-
-編集後は自動的にキャンバスが再描画されます。
+After adding or updating elements call `redraw()` to refresh the canvas.
